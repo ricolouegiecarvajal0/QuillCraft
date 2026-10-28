@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#211e1a"><title>QuillCraft — Your personal notebook</title>
+<link rel="stylesheet" href="./styles.css"></head>
+<body>
+<div class="app">
+<aside class="sidebar">
+ <div class="brand"><div class="brand-icon"><img src="./assets/book-quill.png" alt=""></div><div><strong>QuillCraft</strong><small>YOUR PERSONAL LIBRARY</small></div></div>
+ <button id="newBtn" class="craft-button" title="Craft a new note"><img class="pixel-icon" src="./assets/crafting-table.png" alt=""><span>Craft New Note</span><b>+</b></button>
+ <div class="side-heading"><span>CHISELED BOOKSHELF</span><span id="noteCount">0</span></div>
+ <label class="search"><span>⌕</span><input id="search" placeholder="Search your library..." autocomplete="off" aria-label="Search notes"><kbd>/</kbd></label>
+ <div class="shelf-frame"><div id="notesList" class="notes-list" aria-label="Notes"></div></div><p class="shelf-help">Hover over a book to reveal its title. Click to open.</p>
+ <div class="sidebar-bottom"><span class="status-dot"></span><span>Saved in this browser</span><button id="exportBtn" title="Export all notes" aria-label="Export all notes"><img src="./assets/chest.png" alt=""></button><button id="importBtn" title="Import notes" aria-label="Import notes"><img src="./assets/ender-chest.png" alt=""></button><input type="file" id="importFile" accept=".json,application/json" hidden></div>
+</aside>
+<main class="workspace">
+ <header class="topbar"><div class="crumb"><button id="homeBtn" class="home-btn" title="Visit the librarian">⌂ LIBRARY</button> <span> / </span> <strong id="crumbTitle">WELCOME</strong></div><div class="top-actions"><span id="saveState">All changes saved</span><button id="themeBtn" class="icon-button" title="Toggle light/dark surroundings" aria-label="Toggle theme">☀</button></div></header>
+ <section id="emptyState" class="welcome-view"><div class="welcome-card"><div class="welcome-heading">✦ THE VILLAGE LIBRARY ✦</div><div class="welcome-characters"><div class="villager-stage"><img class="villager" src="./assets/librarian.png" alt="Librarian villager"><div class="lectern"><img src="./assets/lectern.png" alt="Lectern block"></div></div><div class="speech"><span class="speech-name">LIBRARIAN VILLAGER</span><p id="villagerMessage">Hmm! Welcome to QuillCraft, traveler! Every great adventure begins with a story.</p></div></div><h1>Welcome to QuillCraft!</h1><p>Your books are waiting on the shelf. Craft a new one, or open a story you have already begun.</p><div class="welcome-actions"><button id="emptyCreate" class="primary-btn"><img src="./assets/crafting-table.png" alt=""> Craft a New Book</button><button id="browseBtn" class="secondary-btn">Browse Books</button></div><div class="welcome-stats"><span id="welcomeCount">0 books in your library</span><span>✦ Saved only in this browser</span></div></div></section>
+ <section id="editorView" class="editor-view" hidden>
+ <div class="editor-toolbar"><div class="book-label"><img class="tiny-book pixel-icon" src="./assets/book-quill.png" alt=""><span>BOOK &amp; QUILL</span></div><div class="editor-actions"><button id="duplicateBtn" title="Duplicate note">⧉ <span>Duplicate</span></button><button id="deleteBtn" title="Delete note" class="danger" >♲ <span>Delete</span></button></div></div>
+ <div class="book-stage"><div class="book-shadow"><div class="book-cover"><div class="open-book">
+ <div class="book-page left-page"><div class="page-inner"><div class="page-number" id="leftPageNumber">Page 1 of 2</div><input id="titleInput" maxlength="100" placeholder="Untitled Book" aria-label="Note title"><div class="title-rule"></div><textarea id="leftInput" aria-label="Left page contents" placeholder="Write your adventure here..." spellcheck="true"></textarea><div class="page-flourish">❧</div></div></div>
+ <div class="book-page right-page"><div class="page-inner"><div class="page-number" id="rightPageNumber">Page 2 of 2</div><textarea id="rightInput" aria-label="Right page contents" placeholder="Continue your story..." spellcheck="true"></textarea><div class="page-flourish">❧</div></div></div>
+ </div></div></div></div>
+ <div class="page-controls"><button id="prevPage" aria-label="Previous spread">◀ Previous</button><span id="pageIndicator">PAGES 1–2</span><button id="nextPage" aria-label="Next spread">Next ▶</button></div>
+ <div class="book-meta"><span id="wordCount">0 words</span><span id="pageInfo">Pages 1–2</span></div>
+ <div class="editor-footnote"><span>✎ Your writing is always editable</span><span id="editedAt"></span></div>
+ </section>
+</main></div>
+<div id="craftModal" class="modal-backdrop" hidden><div class="modal" role="dialog" aria-modal="true" aria-labelledby="craftHeading">
+<button id="closeModal" class="modal-close" aria-label="Close">×</button><div class="eyebrow"><img class="pixel-icon" src="./assets/crafting-table.png" alt=""> WORKBENCH</div><h2 id="craftHeading">Craft a new book</h2><p>Gather your ingredients and begin a new story.</p>
+<div class="crafting-panel"><div class="recipe"><div class="recipe-title">CRAFTING</div><div class="craft-grid">
+<div class="slot"></div><div class="slot item feather" title="Feather"><img src="./assets/feather.png" alt="Feather"></div><div class="slot"></div>
+<div class="slot item ink" title="Ink Sac"><img src="./assets/ink-sac.png" alt="Ink Sac"></div><div class="slot item book" title="Book"><img src="./assets/book.png" alt="Book"></div><div class="slot"></div>
+<div class="slot"></div><div class="slot"></div><div class="slot"></div>
+</div></div><div class="recipe-arrow">➜</div><div class="result"><div class="recipe-title">RESULT</div><div class="slot result-slot" title="Book and Quill"><img src="./assets/book-quill.png" alt="Book and Quill"></div></div></div>
+<label class="modal-label" for="newTitle">BOOK TITLE</label><input id="newTitle" maxlength="100" placeholder="My Adventure Journal" autocomplete="off">
+<div class="modal-buttons"><button id="cancelCraft" class="secondary-btn">Cancel</button><button id="confirmCraft" class="primary-btn">✦ Craft Book &amp; Quill</button></div>
+</div></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script type="module" src="./js/app.js"></script></body></html>
